@@ -1,3 +1,4 @@
+
 import unittest
 
 from app import app
@@ -46,6 +47,63 @@ class TestVoyageAnalyticsAPI(unittest.TestCase):
         ]
 
         self.assertEqual(data["fields"], expected_fields)
+
+    def test_predict_invalid_travel_date(self):
+        response = self.client.post(
+            "/predict",
+            json={
+                "from_location": "Delhi",
+                "to_location": "Mumbai",
+                "flight_type": "Economy",
+                "agency": "Test Agency",
+                "travel_time": 2.5,
+                "distance": 1150,
+                "travel_date": "not-a-valid-date",
+            },
+        )
+
+        self.assertEqual(response.status_code, 400)
+
+        data = response.get_json()
+        self.assertIn("Invalid input", data["error"])
+
+    def test_predict_invalid_travel_time(self):
+        response = self.client.post(
+            "/predict",
+            json={
+                "from_location": "Delhi",
+                "to_location": "Mumbai",
+                "flight_type": "Economy",
+                "agency": "Test Agency",
+                "travel_time": "invalid",
+                "distance": 1150,
+                "travel_date": "2026-10-25",
+            },
+        )
+
+        self.assertEqual(response.status_code, 400)
+
+        data = response.get_json()
+        self.assertIn("Invalid input", data["error"])
+
+    def test_predict_invalid_distance(self):
+        response = self.client.post(
+            "/predict",
+            json={
+                "from_location": "Delhi",
+                "to_location": "Mumbai",
+                "flight_type": "Economy",
+                "agency": "Test Agency",
+                "travel_time": 2.5,
+                "distance": "invalid",
+                "travel_date": "2026-10-25",
+            },
+        )
+
+        self.assertEqual(response.status_code, 400)
+
+        data = response.get_json()
+        self.assertIn("Invalid input", data["error"])
 
 
 if __name__ == "__main__":

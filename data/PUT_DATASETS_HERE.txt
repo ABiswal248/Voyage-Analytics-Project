@@ -1,0 +1,4 @@
+Copy the supplied datasets into this folder:
+- flights.csv
+- hotels.csv
+- users.csv (rename users(20261007-185632).csv to users.csv)

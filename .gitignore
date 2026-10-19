@@ -1,0 +1,35 @@
+
+.venv/
+__pycache__/
+**/__pycache__/
+*.py[cod]
+.env
+.env.*
+!.env.example
+
+mlruns/
+reports/
+
+# Local datasets
+data/*.csv
+
+# Local export
+2026-10-11T13-10_export.csv
+
+# Keep trained models available for deployment
+# Do not ignore artifacts/*.joblib
+
+# Allow project screenshot evidence in GitHub
+!reports/
+reports/*
+!reports/screenshots/
+reports/screenshots/*
+!reports/screenshots/*.png
+
+# Exclude local secrets and virtual environments
+.env
+.venv/
+
+# Local backup files
+.gitignore.backup
+.gitignore.backup-before-github

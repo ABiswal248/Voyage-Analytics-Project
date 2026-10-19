@@ -1,0 +1,25 @@
+services:
+  mysql:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: voyagepass
+      MYSQL_DATABASE: voyage_analytics
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./sql/schema.sql:/docker-entrypoint-initdb.d/01-schema.sql:ro
+  api:
+    build: .
+    environment:
+      MYSQL_HOST: mysql
+      MYSQL_PORT: 3306
+      MYSQL_USER: root
+      MYSQL_PASSWORD: voyagepass
+      MYSQL_DATABASE: voyage_analytics
+    ports:
+      - "5000:5000"
+    depends_on:
+      - mysql
+volumes:
+  mysql_data:

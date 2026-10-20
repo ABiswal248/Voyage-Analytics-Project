@@ -7,6 +7,5 @@ streamlit
 requests
 sqlalchemy
 pymysql
-mlflow
 matplotlib
 seaborn
